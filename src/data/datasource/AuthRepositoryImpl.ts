@@ -1,12 +1,15 @@
 import { AuthRepository } from '../../domain/repositories/AuthRepository';
-import { authApi } from '../api/AuthApi';
+import { AuthLocalDataSource } from './AuthLocalDataSource';
+
 
 export class AuthRepositoryImpl implements AuthRepository {
-    async login(email: string, password: string) {
-        return authApi.login(email, password);
-    }
+  constructor(private dataSource: AuthLocalDataSource) {}
 
-    async logout() {
-        return;
-    }
+  login(email: string, password: string): Promise<void> {
+    return this.dataSource.login(email, password);
+  }
+
+  logout(): Promise<void> {
+    return this.dataSource.logout();
+  }
 }

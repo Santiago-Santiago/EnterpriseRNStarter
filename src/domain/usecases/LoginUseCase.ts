@@ -1,9 +1,13 @@
-import { AuthRepository } from "../repositories/AuthRepository";
+import { AuthRepository } from '../repositories/AuthRepository';
 
 export class LoginUseCase {
-    constructor(private readonly authRepository: AuthRepository) { }
+  constructor(private authRepository: AuthRepository) {}
 
-    excute(email: string, password: string) {
-        return this.authRepository.login(email, password);
+  async execute(email: string, password: string): Promise<void> {
+    if (!email || !password) {
+      throw new Error('Invalid credentials');
     }
+
+    await this.authRepository.login(email, password);
+  }
 }
