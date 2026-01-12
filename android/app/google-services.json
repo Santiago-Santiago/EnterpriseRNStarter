@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "918138609097",
+    "project_id": "enterprise-rn-auth",
+    "storage_bucket": "enterprise-rn-auth.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918138609097:android:7bd5a3fded8d48a0d85c18",
+        "android_client_info": {
+          "package_name": "com.enterprisernstarter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfSUUarEfm1PpWIVM0H7PDQYbsdznVnsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

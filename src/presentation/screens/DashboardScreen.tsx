@@ -1,21 +1,20 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { loginUseCase } from '../../app/di/authDependencies';
 import { useAuth } from '../../app/providers/AuthProvider';
+import { logoutUseCase } from '../../app/di/authDependencies';
 
+export const DashboardScreen = () => {
+  const { logout } = useAuth();
 
-export const LoginScreen = () => {
-  const { login } = useAuth();
-
-  const onLogin = async () => {
-    await loginUseCase.execute('test@mail.com', '123456');
-    login(); // actualiza estado global
+  const onLogout = async () => {
+    await logoutUseCase.execute();
+    logout();
   };
 
   return (
     <View>
-      <Text>Login</Text>
-      <Button title="Login" onPress={onLogin} />
+      <Text>Dashboard</Text>
+      <Button title="Logout" onPress={onLogout} />
     </View>
   );
 };
