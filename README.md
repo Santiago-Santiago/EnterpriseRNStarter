@@ -1,97 +1,107 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# EnterpriseRNStarter
 
-# Getting Started
+> Plantilla profesional de React Native enfocada en arquitectura limpia, mantenibilidad y flujos empresariales reales.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## Tabla de Contenido
+1. [Resumen Ejecutivo](#resumen-ejecutivo)
+2. [Principales Capacidades](#principales-capacidades)
+3. [Arquitectura y Organizacion](#arquitectura-y-organizacion)
+4. [Flujo de Autenticacion](#flujo-de-autenticacion)
+5. [Stack Tecnologico](#stack-tecnologico)
+6. [Guia de Ejecucion](#guia-de-ejecucion)
+7. [Credenciales Demo](#credenciales-demo)
+8. [Buenas Practicas Implementadas](#buenas-practicas-implementadas)
+9. [Autor](#autor)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+---
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Resumen Ejecutivo
+EnterpriseRNStarter es una aplicacion movil multiplataforma (Android/iOS) construida con React Native 0.83 y TypeScript. El repositorio muestra como estructurar proyectos enterprise utilizando Clean Architecture, inyeccion manual de dependencias, separacion estricta de capas y servicios reales como Firebase Authentication.
 
-```sh
-# Using npm
-npm start
+La meta principal es entregar una base solida para equipos senior que valoran el dominio en arquitectura, pruebas unitarias y escalabilidad mas que en componentes visuales aislados.
 
-# OR using Yarn
-yarn start
+---
+
+## Principales Capacidades
+- Autenticacion real con Firebase (email/password) desacoplada mediante repositorios.
+- Navegacion con React Navigation y flujo protegido segun estado de sesion.
+- Theming centralizado (colores, tipografia, espaciados) y estilos reutilizables.
+- Casos de uso unitariamente testeados con Jest para garantizar reglas de negocio.
+- Configuracion lista para Android (Gradle moderno, Google Services) y preparada para iOS.
+
+---
+
+## Arquitectura y Organizacion
+El proyecto aplica Clean Architecture con la siguiente estructura:
+
+```
+src/
+ domain/        Casos de uso, entidades y contratos (sin dependencias externas)
+ data/          Implementaciones concretas (Firebase, repositorios)
+ app/           Providers, navegacion y contenedores de dependencias
+ presentation/  UI declarativa, estilos y temas
 ```
 
-## Step 2: Build and run your app
+**Principios aplicados**
+- Dependency Rule: solo el dominio conoce sus reglas; las capas externas dependen del dominio y nunca al reves.
+- Separation of Concerns: cada modulo tiene responsabilidades acotadas y testeables.
+- Inyeccion manual de dependencias para mantener control fino y facilitar pruebas.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+---
 
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+## Flujo de Autenticacion
 ```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+LoginScreen -> LoginUseCase -> AuthRepository -> FirebaseAuthDataSource -> Firebase Auth
 ```
+- Los casos de uso validan datos basicos antes de delegar en el repositorio.
+- FirebaseAuthDataSource encapsula las llamadas modernas del SDK modular (getApp, getAuth).
+- Los errores de Firebase se traducen en mensajes amigables a nivel de UI.
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
-```
+## Stack Tecnologico
+| Capa | Tecnologia |
+|------|------------|
+| Presentacion | React Native 0.83, TypeScript, React Navigation |
+| Dominio | Clean Architecture, casos de uso unitarios |
+| Datos | Firebase Auth modular, repositorios concretos |
+| Tooling | Jest, ESLint, Gradle 8+, Kotlin 2.1 |
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+---
 
-```sh
-# Using npm
-npm run ios
+## Guia de Ejecucion
+1. Clonar el repositorio y ubicarse en la raiz.
+2. Instalar dependencias: npm install.
+3. Android: npx react-native run-android. Para iOS, abrir el workspace en Xcode y ejecutar.
+4. Colocar google-services.json bajo android/app y configurar Firebase en iOS si aplica.
 
-# OR using Yarn
-yarn ios
-```
+> Requisitos previos: Node 20+, JDK 17, Android SDK actualizado y CocoaPods instalado en macOS.
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+---
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Credenciales Demo
+Para probar el flujo completo de inicio de sesion utilizar:
 
-## Step 3: Modify your app
+- Usuario: admin@gmail.com
+- Contrasena: admin2025
 
-Now that you have successfully run the app, let's make changes!
+Estas credenciales permiten validar el estado autenticado y navegar hacia el Dashboard.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+---
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Buenas Practicas Implementadas
+- Validacion y manejo de errores a nivel de casos de uso y UI con mensajes de negocio.
+- Modularizacion de Firebase para evitar APIs obsoletas y facilitar pruebas unitarias.
+- Temas y estilos centralizados que reducen duplicacion.
+- Tests de dominio (LoginUseCase, LogoutUseCase) que ejecutan en milisegundos y no dependen de la UI.
+- Documentacion clara del arbol de directorios y responsabilidades.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+---
 
-## Congratulations! :tada:
+## Autor
+**Santiago Santiago**  
+React Native Developer | Arquitectura de Software
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+> Este proyecto sirve como punto de partida para equipos que necesitan entregar aplicaciones enterprise con fundamentos solidos y mantenibles.
