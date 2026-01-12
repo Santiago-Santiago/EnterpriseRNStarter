@@ -1,9 +1,9 @@
 import { AuthRepository } from '../../domain/repositories/AuthRepository';
-import { AuthLocalDataSource } from './AuthLocalDataSource';
+import { FirebaseAuthDataSource } from './FirebaseAuthDataSource';
 
 
 export class AuthRepositoryImpl implements AuthRepository {
-  constructor(private dataSource: AuthLocalDataSource) {}
+  constructor(private dataSource: FirebaseAuthDataSource) {}
 
   login(email: string, password: string): Promise<void> {
     return this.dataSource.login(email, password);
